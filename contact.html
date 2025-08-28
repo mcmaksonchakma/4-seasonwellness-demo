@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - 4 Seasons Wellness Centre Namsai</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #FFB6C1;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link:hover {
+            background: linear-gradient(135deg, #FFB6C1, #ADD8E6);
+            color: #0a0a0a;
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: #FFB6C1;
+            color: #0a0a0a;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #FFB6C1;
+            margin: 3px 0;
+            border-radius: 3px;
+            transition: 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 5rem 2rem 2rem;
+            transition: right 0.3s ease;
+            z-index: 999;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-nav-link {
+            display: block;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .mobile-nav-link:hover {
+            background: #FFB6C1;
+            color: #0a0a0a;
+            transform: translateX(-10px);
+        }
+
+        /* Contact Section */
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem;
+            min-height: 100vh;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+
+        .contact-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FFB6C1, #ADD8E6, #98FB98);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .contact-header p {
+            font-size: 1.2rem;
+            color: #cccccc;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-info {
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: fadeInLeft 1s ease 0.7s forwards;
+        }
+
+        .contact-form {
+            opacity: 0;
+            transform: translateX(30px);
+            animation: fadeInRight 1s ease 0.9s forwards;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 182, 193, 0.2);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 182, 193, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .info-card h3 {
+            color: #FFB6C1;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .info-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #FFB6C1, #ADD8E6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: #0a0a0a;
+        }
+
+        .info-card p {
+            color: #cccccc;
+            line-height: 1.8;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 182, 193, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .form-container:hover {
+            box-shadow: 0 15px 30px rgba(255, 182, 193, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #FFB6C1;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            border-radius: 15px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #FFB6C1;
+            box-shadow: 0 0 20px rgba(255, 182, 193, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .form-control::placeholder {
+            color: #888888;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #FFB6C1, #ADD8E6);
+            color: #0a0a0a;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255, 182, 193, 0.5);
+            background: linear-gradient(135deg, #98FB98, #E6E6FA);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-2px) scale(1);
+        }
+
+        /* Success Message */
+        .success-message {
+            background: linear-gradient(135deg, #98FB98, #90EE90);
+            color: #0a0a0a;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: bold;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .success-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 3rem 2rem 2rem;
+            margin-top: 4rem;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer p {
+            color: #cccccc;
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer p:hover {
+            color: #FFB6C1;
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Section Styles */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #FFB6C1, #ADD8E6, #98FB98);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 5rem 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-card {
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 1rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 182, 193, 0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .faq-card:nth-child(1) { animation-delay: 0.1s; }
+        .faq-card:nth-child(2) { animation-delay: 0.2s; }
+        .faq-card:nth-child(3) { animation-delay: 0.3s; }
+        .faq-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .faq-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .faq-question {
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question h3 {
+            color: #FFB6C1;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .faq-toggle {
+            color: #ADD8E6;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-card.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-card.active .faq-answer {
+            max-height: 200px;
+            padding: 0 2rem 1.5rem;
+        }
+
+        .faq-answer p {
+            color: #cccccc;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Map Section */
+        .map-section {
+            padding: 5rem 0;
+        }
+
+        .map-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .map-placeholder {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(173, 216, 230, 0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: scaleIn 0.8s ease 0.3s forwards;
+        }
+
+        .map-placeholder:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(173, 216, 230, 0.3);
+        }
+
+        .map-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 15px rgba(173, 216, 230, 0.5));
+        }
+
+        .map-placeholder h3 {
+            color: #ADD8E6;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .map-placeholder p {
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .map-directions {
+            text-align: left;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .map-directions p {
+            color: #98FB98;
+            margin: 0.8rem 0;
+            font-size: 0.9rem;
+        }
+
+        /* Additional Animations */
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .contact-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .form-container {
+                padding: 2rem;
+            }
+
+            .navbar {
+                padding: 1rem;
+            }
+
+            .contact-container {
+                padding: 5rem 1rem 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-header h1 {
+                font-size: 2rem;
+            }
+
+            .form-container {
+                padding: 1.5rem;
+            }
+
+            .info-card {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .faq-question {
+                padding: 1.2rem 1.5rem;
+            }
+
+            .faq-card.active .faq-answer {
+                padding: 0 1.5rem 1.2rem;
+            }
+
+            .map-placeholder {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main>
+        <div class="contact-container">
+            <div class="contact-header">
+                <h1>Get In Touch</h1>
+                <p>Ready to start your fitness journey? Contact us today to learn more about our services and membership options</p>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="info-card">
+                        <h3>
+                            <div class="info-icon">📍</div>
+                            Visit Us
+                        </h3>
+                        <p>Near Woodpecker Nest Guest House<br>
+                        Namsai, Arunachal Pradesh - 792103</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>
+                            <div class="info-icon">📞</div>
+                            Call Us
+                        </h3>
+                        <p>7086230726<br>
+                        Available: Mon-Sat, 6:00 AM - 10:00 PM</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>
+                            <div class="info-icon">💪</div>
+                            Join Today
+                        </h3>
+                        <p>Start your fitness transformation with personalized training programs and expert guidance from our certified trainers.</p>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <div class="form-container">
+                        <div id="success-message" class="success-message">
+                            Thank you for your message! We'll get back to you soon.
+                        </div>
+
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email address" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" class="form-control" placeholder="Tell us about your fitness goals or ask any questions..." required></textarea>
+                            </div>
+
+                            <button type="submit" class="submit-btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <div class="faq-grid">
+                    <div class="faq-card">
+                        <div class="faq-question">
+                            <h3>What are your operating hours?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We're open Monday to Saturday from 6:00 AM to 10:00 PM. We're closed on Sundays for maintenance and staff rest.</p>
+                        </div>
+                    </div>
+                    <div class="faq-card">
+                        <div class="faq-question">
+                            <h3>Do you offer trial sessions?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! We offer a free trial session for new members. Contact us to schedule your complimentary workout session.</p>
+                        </div>
+                    </div>
+                    <div class="faq-card">
+                        <div class="faq-question">
+                            <h3>What should I bring for my first visit?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Just bring comfortable workout clothes, a water bottle, and a towel. We provide all the equipment you'll need.</p>
+                        </div>
+                    </div>
+                    <div class="faq-card">
+                        <div class="faq-question">
+                            <h3>Are there any age restrictions?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We welcome members aged 16 and above. Members under 18 need parental consent. We also offer senior-friendly programs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="map-section">
+            <div class="container">
+                <h2 class="section-title">Find Us</h2>
+                <div class="map-container">
+                    <div class="map-placeholder">
+                        <div class="map-icon">📍</div>
+                        <h3>4 Seasons Wellness Centre</h3>
+                        <p>Near Woodpecker Nest Guest House<br>
+                        Namsai, Arunachal Pradesh - 792103</p>
+                        <div class="map-directions">
+                            <p>🚗 Easy parking available</p>
+                            <p>🚌 Well connected by public transport</p>
+                            <p>🏪 Near local markets and restaurants</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="site-footer"></footer>
+
+    <script>
+        // Navigation and Footer Generation
+        function generateNavigation() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            
+            const navHTML = `
+                <nav class="navbar">
+                    <div class="nav-container">
+                        <a href="index.html" class="logo">4 Seasons Wellness</a>
+                        
+                        <ul class="nav-menu">
+                            <li><a href="index.html" class="nav-link ${currentPage === 'index.html' ? 'active' : ''}">Home</a></li>
+                            <li><a href="about.html" class="nav-link ${currentPage === 'about.html' ? 'active' : ''}">About</a></li>
+                            <li><a href="services.html" class="nav-link ${currentPage === 'services.html' ? 'active' : ''}">Services</a></li>
+                            <li><a href="contact.html" class="nav-link ${currentPage === 'contact.html' ? 'active' : ''}">Contact</a></li>
+                        </ul>
+                        
+                        <div class="hamburger">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="mobile-menu">
+                        <a href="index.html" class="mobile-nav-link">Home</a>
+                        <a href="about.html" class="mobile-nav-link">About</a>
+                        <a href="services.html" class="mobile-nav-link">Services</a>
+                        <a href="contact.html" class="mobile-nav-link">Contact</a>
+                    </div>
+                </nav>
+            `;
+            
+            document.getElementById('site-header').innerHTML = navHTML;
+        }
+
+        function generateFooter() {
+            const footerHTML = `
+                <div class="footer">
+                    <div class="footer-content">
+                        <p>&copy; 2025 4 Seasons Wellness Centre Namsai</p>
+                        <p>Near Woodpecker Nest Guest House, Namsai, Arunachal Pradesh - 792103</p>
+                        <p>Phone: 7086230726</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('site-footer').innerHTML = footerHTML;
+        }
+
+        // Mobile Menu Toggle
+        function setupMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            if (hamburger && mobileMenu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                });
+
+                // Close mobile menu when clicking on links
+                const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                    });
+                });
+            }
+        }
+
+        // Form handling
+        function setupContactForm() {
+            const form = document.getElementById('contact-form');
+            const successMessage = document.getElementById('success-message');
+            
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(form);
+                const name = formData.get('name');
+                const email = formData.get('email');
+                const phone = formData.get('phone');
+                const message = formData.get('message');
+                
+                // Simulate form submission
+                const submitBtn = form.querySelector('.submit-btn');
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+                
+                // Show success message after delay
+                setTimeout(() => {
+                    successMessage.classList.add('show');
+                    form.reset();
+                    submitBtn.textContent = 'Send Message';
+                    submitBtn.disabled = false;
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.classList.remove('show');
+                    }, 5000);
+                }, 1000);
+            });
+
+            // Add input animations
+            const inputs = document.querySelectorAll('.form-control');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.style.transform = 'scale(1.02)';
+                });
+
+                input.addEventListener('blur', () => {
+                    input.parentElement.style.transform = 'scale(1)';
+                });
+
+                // Add typing animation
+                input.addEventListener('input', () => {
+                    if (input.value.length > 0) {
+                        input.style.borderColor = '#98FB98';
+                    } else {
+                        input.style.borderColor = 'rgba(255, 182, 193, 0.3)';
+                    }
+                });
+            });
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            generateNavigation();
+            generateFooter();
+            setupMobileMenu();
+            setupContactForm();
+        });
+    </script>
+</body>
+</html>
