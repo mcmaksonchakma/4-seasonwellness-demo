@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - 4 Seasons Wellness Centre Namsai</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #FFB6C1;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link:hover {
+            background: linear-gradient(135deg, #FFB6C1, #ADD8E6);
+            color: #0a0a0a;
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: #FFB6C1;
+            color: #0a0a0a;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #FFB6C1;
+            margin: 3px 0;
+            border-radius: 3px;
+            transition: 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 5rem 2rem 2rem;
+            transition: right 0.3s ease;
+            z-index: 999;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-nav-link {
+            display: block;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .mobile-nav-link:hover {
+            background: #FFB6C1;
+            color: #0a0a0a;
+            transform: translateX(-10px);
+        }
+
+        /* Services Section */
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem;
+            min-height: 100vh;
+        }
+
+        .services-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+
+        .services-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FFB6C1, #ADD8E6, #98FB98);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .services-header p {
+            font-size: 1.2rem;
+            color: #cccccc;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 182, 193, 0.2);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 182, 193, 0.1) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:nth-child(1) { animation: slideInScale 0.8s ease 0.7s forwards; }
+        .service-card:nth-child(2) { animation: slideInScale 0.8s ease 0.9s forwards; }
+        .service-card:nth-child(3) { animation: slideInScale 0.8s ease 1.1s forwards; }
+        .service-card:nth-child(4) { animation: slideInScale 0.8s ease 1.3s forwards; }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(255, 182, 193, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #FFB6C1, #ADD8E6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-card:hover .service-icon {
+            transform: rotate(360deg) scale(1.2);
+            background: linear-gradient(135deg, #98FB98, #E6E6FA);
+        }
+
+        .service-card h3 {
+            color: #FFB6C1;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-card p {
+            color: #cccccc;
+            line-height: 1.8;
+            font-size: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-top: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-features li {
+            color: #ADD8E6;
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #98FB98;
+            font-weight: bold;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 3rem;
+            background: rgba(255, 182, 193, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 182, 193, 0.2);
+        }
+
+        .cta-section h2 {
+            color: #FFB6C1;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: #cccccc;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #FFB6C1, #ADD8E6);
+            color: #0a0a0a;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 182, 193, 0.5);
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 3rem 2rem 2rem;
+            margin-top: 4rem;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer p {
+            color: #cccccc;
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer p:hover {
+            color: #FFB6C1;
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInScale {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Section Styles */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #FFB6C1, #ADD8E6, #98FB98);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 5rem 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 182, 193, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .pricing-card:nth-child(1) { animation-delay: 0.2s; }
+        .pricing-card:nth-child(2) { animation-delay: 0.4s; }
+        .pricing-card:nth-child(3) { animation-delay: 0.6s; }
+
+        .pricing-card.featured {
+            border: 2px solid #FFB6C1;
+            transform: scale(1.05);
+            background: rgba(255, 182, 193, 0.1);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(255, 182, 193, 0.4);
+        }
+
+        .pricing-card.featured:hover {
+            transform: translateY(-10px) scale(1.1);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #FFB6C1, #ADD8E6);
+            color: #0a0a0a;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .pricing-header h3 {
+            color: #FFB6C1;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 2rem;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: #cccccc;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            color: #cccccc;
+            margin: 0.8rem 0;
+            padding-left: 1rem;
+        }
+
+        .pricing-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #FFB6C1, #ADD8E6);
+            color: #0a0a0a;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+        }
+
+        .pricing-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 182, 193, 0.5);
+            background: linear-gradient(135deg, #98FB98, #E6E6FA);
+        }
+
+        /* Schedule Section */
+        .schedule-section {
+            padding: 5rem 0;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .schedule-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(173, 216, 230, 0.2);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideInLeft 0.8s ease forwards;
+        }
+
+        .schedule-card:nth-child(1) { animation-delay: 0.2s; }
+        .schedule-card:nth-child(2) { animation-delay: 0.4s; transform: translateX(30px); animation-name: slideInRight; }
+        .schedule-card:nth-child(3) { animation-delay: 0.6s; }
+        .schedule-card:nth-child(4) { animation-delay: 0.8s; transform: translateX(30px); animation-name: slideInRight; }
+
+        .schedule-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(173, 216, 230, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .schedule-time {
+            background: linear-gradient(135deg, #ADD8E6, #98FB98);
+            color: #0a0a0a;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .schedule-card h3 {
+            color: #ADD8E6;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .schedule-card p {
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .schedule-instructor {
+            color: #98FB98;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Additional Animations */
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .services-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .service-card {
+                padding: 2rem;
+            }
+
+            .navbar {
+                padding: 1rem;
+            }
+
+            .services-container {
+                padding: 5rem 1rem 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .services-header h1 {
+                font-size: 2rem;
+            }
+
+            .service-card {
+                padding: 1.5rem;
+            }
+
+            .service-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .pricing-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .price {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main>
+        <div class="services-container">
+            <div class="services-header">
+                <h1>Our Services</h1>
+                <p>Discover our comprehensive range of fitness and wellness services designed to help you achieve your health goals</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🏋️‍♂️</div>
+                    <h3>Personal Training</h3>
+                    <p>Get personalized attention with our certified trainers who will create custom workout plans tailored to your specific goals and fitness level.</p>
+                    <ul class="service-features">
+                        <li>One-on-one training sessions</li>
+                        <li>Customized workout plans</li>
+                        <li>Progress tracking</li>
+                        <li>Nutritional guidance</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">👥</div>
+                    <h3>Group Classes</h3>
+                    <p>Join our energetic group fitness classes that make working out fun and motivating. Perfect for all fitness levels with modifications available.</p>
+                    <ul class="service-features">
+                        <li>HIIT & Cardio classes</li>
+                        <li>Strength training</li>
+                        <li>Dance fitness</li>
+                        <li>Beginner-friendly options</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🧘‍♀️</div>
+                    <h3>Yoga & Meditation</h3>
+                    <p>Find inner peace and flexibility through our yoga and meditation sessions. Reduce stress while improving your physical and mental well-being.</p>
+                    <ul class="service-features">
+                        <li>Hatha & Vinyasa yoga</li>
+                        <li>Guided meditation</li>
+                        <li>Stress relief techniques</li>
+                        <li>Mind-body connection</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🥗</div>
+                    <h3>Nutrition Advice</h3>
+                    <p>Complement your fitness journey with proper nutrition guidance. Our experts will help you develop healthy eating habits for lasting results.</p>
+                    <ul class="service-features">
+                        <li>Meal planning</li>
+                        <li>Nutritional assessments</li>
+                        <li>Weight management</li>
+                        <li>Supplement guidance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <h2>Ready to Start Your Fitness Journey?</h2>
+                <p>Join 4 Seasons Wellness Centre today and take the first step towards a healthier, happier you!</p>
+                <a href="contact.html" class="cta-button">Get Started Today</a>
+            </div>
+        </div>
+
+        <!-- Pricing Section -->
+        <section class="pricing-section">
+            <div class="container">
+                <h2 class="section-title">Membership Plans</h2>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Basic</h3>
+                            <div class="price">₹1,500<span>/month</span></div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>✓ Gym access during off-peak hours</li>
+                            <li>✓ Basic equipment usage</li>
+                            <li>✓ Locker facility</li>
+                            <li>✓ Free fitness assessment</li>
+                        </ul>
+                        <a href="contact.html" class="pricing-btn">Choose Plan</a>
+                    </div>
+                    <div class="pricing-card featured">
+                        <div class="popular-badge">Most Popular</div>
+                        <div class="pricing-header">
+                            <h3>Premium</h3>
+                            <div class="price">₹2,500<span>/month</span></div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>✓ 24/7 gym access</li>
+                            <li>✓ All equipment & classes</li>
+                            <li>✓ Personal trainer consultation</li>
+                            <li>✓ Nutrition guidance</li>
+                            <li>✓ Free protein shake</li>
+                        </ul>
+                        <a href="contact.html" class="pricing-btn">Choose Plan</a>
+                    </div>
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>VIP</h3>
+                            <div class="price">₹4,000<span>/month</span></div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>✓ Everything in Premium</li>
+                            <li>✓ Dedicated personal trainer</li>
+                            <li>✓ Custom meal plans</li>
+                            <li>✓ Priority booking</li>
+                            <li>✓ Guest passes (2/month)</li>
+                        </ul>
+                        <a href="contact.html" class="pricing-btn">Choose Plan</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schedule Section -->
+        <section class="schedule-section">
+            <div class="container">
+                <h2 class="section-title">Class Schedule</h2>
+                <div class="schedule-grid">
+                    <div class="schedule-card">
+                        <div class="schedule-time">6:00 AM - 8:00 AM</div>
+                        <h3>Morning Cardio Blast</h3>
+                        <p>High-energy cardio session to kickstart your day</p>
+                        <div class="schedule-instructor">👨‍🏫 Instructor: Rajesh</div>
+                    </div>
+                    <div class="schedule-card">
+                        <div class="schedule-time">9:00 AM - 10:00 AM</div>
+                        <h3>Yoga Flow</h3>
+                        <p>Gentle yoga practice for flexibility and mindfulness</p>
+                        <div class="schedule-instructor">🧘‍♀️ Instructor: Anjali</div>
+                    </div>
+                    <div class="schedule-card">
+                        <div class="schedule-time">6:00 PM - 7:00 PM</div>
+                        <h3>Strength Training</h3>
+                        <p>Build muscle and increase strength with guided workouts</p>
+                        <div class="schedule-instructor">💪 Instructor: Rajesh</div>
+                    </div>
+                    <div class="schedule-card">
+                        <div class="schedule-time">7:30 PM - 8:30 PM</div>
+                        <h3>Dance Fitness</h3>
+                        <p>Fun dance workout combining fitness with rhythm</p>
+                        <div class="schedule-instructor">💃 Instructor: Priya</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="site-footer"></footer>
+
+    <script>
+        // Navigation and Footer Generation
+        function generateNavigation() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            
+            const navHTML = `
+                <nav class="navbar">
+                    <div class="nav-container">
+                        <a href="index.html" class="logo">4 Seasons Wellness</a>
+                        
+                        <ul class="nav-menu">
+                            <li><a href="index.html" class="nav-link ${currentPage === 'index.html' ? 'active' : ''}">Home</a></li>
+                            <li><a href="about.html" class="nav-link ${currentPage === 'about.html' ? 'active' : ''}">About</a></li>
+                            <li><a href="services.html" class="nav-link ${currentPage === 'services.html' ? 'active' : ''}">Services</a></li>
+                            <li><a href="contact.html" class="nav-link ${currentPage === 'contact.html' ? 'active' : ''}">Contact</a></li>
+                        </ul>
+                        
+                        <div class="hamburger">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="mobile-menu">
+                        <a href="index.html" class="mobile-nav-link">Home</a>
+                        <a href="about.html" class="mobile-nav-link">About</a>
+                        <a href="services.html" class="mobile-nav-link">Services</a>
+                        <a href="contact.html" class="mobile-nav-link">Contact</a>
+                    </div>
+                </nav>
+            `;
+            
+            document.getElementById('site-header').innerHTML = navHTML;
+        }
+
+        function generateFooter() {
+            const footerHTML = `
+                <div class="footer">
+                    <div class="footer-content">
+                        <p>&copy; 2025 4 Seasons Wellness Centre Namsai</p>
+                        <p>Near Woodpecker Nest Guest House, Namsai, Arunachal Pradesh - 792103</p>
+                        <p>Phone: 7086230726</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('site-footer').innerHTML = footerHTML;
+        }
+
+        // Mobile Menu Toggle
+        function setupMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            if (hamburger && mobileMenu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                });
+
+                // Close mobile menu when clicking on links
+                const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                    });
+                });
+            }
+        }
+
+        // Interactive service cards
+        function setupServiceCards() {
+            const serviceCards = document.querySelectorAll('.service-card');
+            
+            serviceCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    // Add pulse animation to icon
+                    const icon = card.querySelector('.service-icon');
+                    icon.style.animation = 'pulse 0.6s ease';
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    const icon = card.querySelector('.service-icon');
+                    icon.style.animation = '';
+                });
+
+                // Add click ripple effect
+                card.addEventListener('click', (e) => {
+                    const ripple = document.createElement('div');
+                    ripple.style.position = 'absolute';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.background = 'rgba(255, 182, 193, 0.4)';
+                    ripple.style.transform = 'scale(0)';
+                    ripple.style.animation = 'ripple 0.6s linear';
+                    ripple.style.left = e.clientX - card.offsetLeft + 'px';
+                    ripple.style.top = e.clientY - card.offsetTop + 'px';
+                    ripple.style.width = ripple.style.height = '20px';
+                    
+                    card.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            generateNavigation();
+            generateFooter();
+            setupMobileMenu();
+            setupServiceCards();
+        });
+
+        // Add pulse and ripple animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.1); }
+                100% { transform: scale(1); }
+            }
+            
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
